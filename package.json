@@ -1,0 +1,63 @@
+{
+  "private": true,
+  "name": "@antv/l7-leaflet",
+  "version": "0.0.1",
+  "scripts": {
+    "tsc": "tsc --project tsconfig.build.json",
+    "clean": "rimraf dist; rimraf es; rimraf lib;",
+    "build": "father build",
+    "start": "dumi dev",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "README.md"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/l7-leaflet.js",
+  "types": "es/index.d.ts",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "react": "^18.0.0"
+  },
+  "peerDependencies": {
+    "@antv/l7": "^2.9.26",
+    "@antv/l7-maps": "^2.9.26",
+    "@antv/l7-utils": "^2.9.26",
+    "leaflet": "~1.8.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.15.1",
+    "@testing-library/react": "^13.0.0",
+    "@types/jest": "^27.0.3",
+    "@umijs/fabric": "^2.8.1",
+    "@umijs/test": "^3.0.5",
+    "dumi": "^1.1.0",
+    "father": "^4.0.0-rc.2",
+    "gh-pages": "^3.0.0",
+    "leaflet": "^1.8.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^2.2.1",
+    "yorkie": "^2.0.0"
+  },
+  "license": "MIT"
+}
