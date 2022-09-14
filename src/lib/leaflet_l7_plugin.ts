@@ -29,10 +29,13 @@ export default class LeafletLayer extends L.Layer {
       L.DomUtil.addClass(this.container, 'leaflet-zoom-animated');
     }
 
+    // @ts-ignore
     this.getPane()!.appendChild(this.container);
+    // @ts-ignore
     const size = this._map.getSize();
     this.container.style.width = `${size.x}px`;
     this.container.style.height = `${size.y}px`;
+    // @ts-ignore
     this.scene = createL7Instance(this._map, this.container, this.scene as Scene);
     this.update();
 

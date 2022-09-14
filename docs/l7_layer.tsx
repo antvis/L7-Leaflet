@@ -7,12 +7,33 @@ import React, { useEffect } from 'react';
 
 export default () => {
   useEffect(() => {
-    const map = L.map('map').setView([30, 112], 3);
-
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    const map = L.map('map', {
+      minZoom: 1,
+    }).setView([30, 112], 3);
+    const mapType = 'vec';
+    L.tileLayer(
+      'https://t{s}.tianditu.gov.cn/' +
+        mapType +
+        '_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=' +
+        mapType +
+        '&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}&tk=b72aa81ac2b3cae941d1eb213499e15e',
+      {
+        subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+        attribution:
+          '&copy; <a href="http://lbs.tianditu.gov.cn/home.html">天地图 GS(2022)3124号 - 甲测资字1100471</a>',
+      },
+    ).addTo(map);
+    const mapLabelType = 'cva';
+    L.tileLayer(
+      'https://t{s}.tianditu.gov.cn/' +
+        mapLabelType +
+        '_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=' +
+        mapLabelType +
+        '&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}&tk=b72aa81ac2b3cae941d1eb213499e15e',
+      {
+        subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+      },
+    ).addTo(map);
 
     L.marker([30, 112])
       .addTo(map)
