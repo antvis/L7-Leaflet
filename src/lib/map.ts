@@ -4,7 +4,7 @@
 import { IMercator, IViewport, Viewport, BaseMapService } from '@antv/l7';
 import * as L from 'leaflet';
 
-export default class MapService<T> extends BaseMapService<L.Map> {
+export default class MapService extends BaseMapService<L.Map> {
   public lngLatToMercator(lnglat: [number, number], altitude: number): IMercator {
     throw new Error('Method not implemented.');
   }
@@ -18,12 +18,14 @@ export default class MapService<T> extends BaseMapService<L.Map> {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore
-  public map: L.Map & T;
+  public map: L.Map;
 
   protected viewport: Viewport;
 
   // @ts-ignore
   private sceneContainer: HTMLElement;
+
+  // 地图初始化
 
   public async init(): Promise<void> {
     const {
@@ -39,27 +41,29 @@ export default class MapService<T> extends BaseMapService<L.Map> {
     this.viewport = new Viewport();
 
     if (mapInstance) {
+      //传入 leafet 地图实例
       // @ts-ignore
       this.map = mapInstance;
       this.$mapContainer = this.map.getContainer();
     } else {
+      // 传入 leafet 地图初始化配置
       this.$mapContainer = this.creatMapContainer(id);
       // @ts-ignore
       this.map = new L.Map(this.$mapContainer, {
         zoomSnap: 0,
         zoomAnimation: true,
+        ...rest,
         center: rest.center?.reverse() as L.LatLngExpression,
-        zoom: rest.zoom,
       });
     }
     L.DomUtil.addClass(this.$mapContainer as HTMLElement, 'leaflet-zoom-anim');
     this.map.on('zoomanim', this.onAnimZoom.bind(this));
     this.map.on('moveend', this.update.bind(this));
 
-    // 不同于高德地图，需要手动触发首次渲染
+    // 触发首次渲染
     this.handleCameraChanged();
   }
-  // init
+  // 设置 Marker 容器
   public addMarkerContainer(): void {
     this.markerContainer = this.map.getPane('markerPane') as HTMLElement;
   }
@@ -109,9 +113,6 @@ export default class MapService<T> extends BaseMapService<L.Map> {
   protected handleCameraChanged = (e?: any) => {
     const { lat, lng } = this.map.getCenter();
     const { x, y } = this.map.getSize();
-    // Tip: 统一触发地图变化事件
-    this.emit('mapchange');
-    // resync
     (this.viewport as IViewport).syncWithMapCamera({
       bearing: 0,
       center: [lng, lat],

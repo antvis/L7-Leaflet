@@ -1,7 +1,6 @@
 {
-  "private": true,
   "name": "@antv/l7-leaflet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "tsc": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist; rimraf es; rimraf lib;",
@@ -23,7 +22,7 @@
   ],
   "main": "lib/index.js",
   "module": "es/index.js",
-  "unpkg": "dist/l7-leaflet.js",
+  "unpkg": "dist/l7-leaflet.min.js",
   "types": "es/index.d.ts",
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -37,13 +36,12 @@
     ]
   },
   "dependencies": {
-    "react": "^18.0.0"
+    
   },
   "peerDependencies": {
     "@antv/l7": "^2.9.26",
-    "@antv/l7-maps": "^2.9.26",
-    "@antv/l7-utils": "^2.9.26",
-    "leaflet": "~1.8.0"
+    "leaflet": "~1.8.0",
+    "react": "^18.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -58,6 +56,10 @@
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
     "yorkie": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "license": "MIT"
 }
