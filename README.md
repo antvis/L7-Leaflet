@@ -1,16 +1,36 @@
 # L7-Leaflet
 
+## introduction
+
+L7-leaflet a lib you can be use L7 or Leaflet. it means in L7 project you can use leafet map features and in leaflet project you can use L7 Visualistion features. L7-leaflet consists of two parts：
+
+- L7 plugin for Lealfet，use by Leaflet
+- Leafet BaseMap for L7 use by Leaflet L7
+
+[online demo](https://l7-leaflet.antv.vision/)
+
+## L7
+
 - [L7](https://github.com/antvis/l7) Large-scale WebGL-powered Geospatial data visualization analysis engine.
 
+<p align="center">
 <img src="https://camo.githubusercontent.com/9dce91a0264bc3f6eb0b54c4cb7b4911555af7206db6eb9cb9bd9a9d000e8de8/68747470733a2f2f67772e616c697061796f626a656374732e636f6d2f6d646e2f726d735f3835356261622f616674732f696d672f412a532d373351704f386430594141414141414141414141426b4152516e4151" alt="l7demo" style="width:500px;"/>
+
+</p>
+
+## Leaflet
 
 - [Leaflet](https://github.com/Leaflet/Leaflet) an open-source JavaScript library for mobile-friendly interactive maps
 
+<p align="center">
 <img src="https://gw.alipayobjects.com/mdn/rms_816329/afts/img/A*0UvOQa_6rPcAAAAAAAAAAAAAARQnAQ" alt="leaflet" style="width:500px;"/>
+</p>
 
-L7 Leaflet:
+## L7-Leaflet:
 
+<p align="center">
 <img src="https://gw.alipayobjects.com/mdn/rms_816329/afts/img/A*lAtVT4xvuQYAAAAAAAAAAAAAARQnAQ" alt="leaflet-map" style="width:500px;"/>
+</p>
 
 ### install
 
@@ -28,7 +48,7 @@ or
 
 ### L7 plugin for Lealfet use in Leaflet
 
-```
+```js
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LineLayer } from '@antv/l7';
@@ -114,13 +134,11 @@ export default () => {
     />
   );
 };
-
-
 ```
 
 ### Leafet BaseMap for L7 use in L7
 
-```
+```js
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LineLayer } from '@antv/l7';
@@ -206,5 +224,4 @@ export default () => {
     />
   );
 };
-
 ```
