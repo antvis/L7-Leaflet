@@ -1,5 +1,6 @@
 import * as L from 'leaflet';
-import { Scene, Map } from '@antv/l7';
+import { Scene } from '@antv/l7';
+import { Map } from '../';
 function getViewState(map: L.Map) {
   return {
     longitude: map.getCenter().lng,
@@ -23,6 +24,7 @@ export function createL7Instance(map: L.Map, container: HTMLDivElement, scene: S
         zoom: viewState.zoom,
         pitch: 0,
         rotation: 0,
+        mapInstance: map,
       }),
     });
   }
