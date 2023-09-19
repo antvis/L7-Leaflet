@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { Scene } from '@antv/l7';
+import { ISceneConfig, Scene } from '@antv/l7';
 import { Map } from '../';
 function getViewState(map: L.Map) {
   return {
@@ -11,10 +11,16 @@ function getViewState(map: L.Map) {
   };
 }
 
-export function createL7Instance(map: L.Map, container: HTMLDivElement, scene: Scene) {
+export function createL7Instance(
+  map: L.Map,
+  container: HTMLDivElement,
+  scene: Scene | undefined,
+  props: Omit<ISceneConfig, 'id' | 'map'>,
+) {
   if (!scene) {
     const viewState = getViewState(map);
     scene = new Scene({
+      ...props,
       id: container,
       map: new Map({
         pitchEnabled: false,
