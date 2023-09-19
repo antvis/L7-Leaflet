@@ -20,7 +20,7 @@ export default class MapService extends BaseMapService<L.Map> {
   // @ts-ignore
   public map: L.Map;
 
-  protected viewport: Viewport;
+  protected viewport: Viewport = undefined as any;
 
   // @ts-ignore
   private sceneContainer: HTMLElement;

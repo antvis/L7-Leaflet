@@ -1,11 +1,12 @@
 import * as L from 'leaflet';
+import { Scene } from '@antv/l7';
 export default class LeafletLayer extends L.Layer {
   private container;
   private animate;
   private props;
   private scene;
   constructor(props: any);
-  getScene(): any;
+  getScene(): Scene | undefined;
   onAdd(): this;
   onRemove(map: L.Map): this;
   /**

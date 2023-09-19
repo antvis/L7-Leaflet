@@ -11,6 +11,8 @@ export default class LeafletLayer extends L.Layer {
 
   private scene: Scene | undefined;
 
+  // protected _map: any;
+
   constructor(props: any) {
     super();
 
