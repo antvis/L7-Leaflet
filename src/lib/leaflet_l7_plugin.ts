@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { Scene } from '@antv/l7';
+import { Scene, type ISceneConfig } from '@antv/l7';
 
 import { createL7Instance, updateL7View } from './util';
 export default class LeafletLayer extends L.Layer {
@@ -7,16 +7,15 @@ export default class LeafletLayer extends L.Layer {
 
   private animate: boolean | undefined = undefined;
 
-  private props: any;
+  private props: Omit<ISceneConfig, 'id' | 'map'>;
 
   private scene: Scene | undefined;
 
   // protected _map: any;
 
-  constructor(props: any) {
+  constructor(props?: Omit<ISceneConfig, 'id' | 'map'>) {
     super();
-
-    this.props = props;
+    this.props = props ?? {};
   }
 
   public getScene() {
@@ -31,14 +30,11 @@ export default class LeafletLayer extends L.Layer {
       L.DomUtil.addClass(this.container, 'leaflet-zoom-animated');
     }
 
-    // @ts-ignore
     this.getPane()!.appendChild(this.container);
-    // @ts-ignore
     const size = this._map.getSize();
     this.container.style.width = `${size.x}px`;
     this.container.style.height = `${size.y}px`;
-    // @ts-ignore
-    this.scene = createL7Instance(this._map, this.container, this.scene as Scene);
+    this.scene = createL7Instance(this._map, this.container, this.scene, this.props);
     this.update();
 
     return this;
