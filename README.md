@@ -12,6 +12,8 @@ L7 Leaflet:
 
 <img src="https://gw.alipayobjects.com/mdn/rms_816329/afts/img/A*lAtVT4xvuQYAAAAAAAAAAAAAARQnAQ" alt="leaflet-map" style="width:500px;"/>
 
+[online demo](https://l7-leaflet.antv.vision/)
+
 ### install
 
 ```
