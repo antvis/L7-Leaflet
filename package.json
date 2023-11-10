@@ -1,6 +1,6 @@
 {
   "name": "@antv/l7-leaflet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "tsc": "tsc --project tsconfig.build.json",
     "clean": "rimraf dist; rimraf es; rimraf lib;",
