@@ -3,7 +3,6 @@ import L from 'leaflet';
 import React from 'react';
 import { useRef } from 'react';
 import { PointLayer, Scene } from '@antv/l7';
-// @ts-ignore
 import { L7Layer } from '@antv/l7-leaflet';
 
 export default () => {
