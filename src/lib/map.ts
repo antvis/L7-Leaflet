@@ -1,7 +1,7 @@
 /**
  * MapboxService
  */
-import { IMercator, IViewport, Viewport, BaseMapService } from '@antv/l7';
+import { IMercator, IViewport, Viewport, BaseMapService, Bounds } from '@antv/l7';
 import * as L from 'leaflet';
 
 export default class MapService extends BaseMapService<L.Map> {
@@ -50,7 +50,7 @@ export default class MapService extends BaseMapService<L.Map> {
       this.$mapContainer = this.creatMapContainer(id);
       // @ts-ignore
       this.map = new L.Map(this.$mapContainer, {
-        zoomSnap: 0,
+        zoomSnap: 0.1,
         zoomAnimation: true,
         ...rest,
         center: rest.center?.reverse() as L.LatLngExpression,
@@ -150,5 +150,22 @@ export default class MapService extends BaseMapService<L.Map> {
   }
   public onCameraChanged(callback: (viewport: IViewport) => void): void {
     this.cameraChangedCallback = callback;
+  }
+  public getBounds(): Bounds {
+    const bounds = this.map.getBounds();
+    const NE = bounds.getNorthEast().wrap();
+    const SW = bounds.getSouthWest().wrap();
+    const center = this.getCenter();
+    const maxlng = center.lng > NE.lng || center.lng < SW.lng ? 180 - NE.lng : NE.lng;
+    const minlng = center.lng < SW.lng ? SW.lng - 180 : SW.lng;
+    console.log([
+      [minlng, SW.lat],
+      [maxlng, NE.lat],
+    ]);
+    // 兼容 Mapbox，统一返回西南、东北
+    return [
+      [minlng, SW.lat],
+      [maxlng, NE.lat],
+    ];
   }
 }
