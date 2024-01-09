@@ -50,7 +50,7 @@ export default class MapService extends BaseMapService<L.Map> {
       this.$mapContainer = this.creatMapContainer(id);
       // @ts-ignore
       this.map = new L.Map(this.$mapContainer, {
-        zoomSnap: 0,
+        zoomSnap: 0.1,
         zoomAnimation: true,
         ...rest,
         center: rest.center?.reverse() as L.LatLngExpression,
