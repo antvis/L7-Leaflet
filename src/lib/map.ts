@@ -1,7 +1,7 @@
 /**
  * MapboxService
  */
-import { IMercator, IViewport, Viewport, BaseMapService, Bounds } from '@antv/l7';
+import { IMercator, IViewport, Viewport, BaseMapService, type Bounds } from '@antv/l7';
 import * as L from 'leaflet';
 
 export default class MapService extends BaseMapService<L.Map> {
@@ -63,9 +63,27 @@ export default class MapService extends BaseMapService<L.Map> {
     // 触发首次渲染
     this.handleCameraChanged();
   }
+
+  public getMapCanvasContainer() {
+    return this.map.getContainer();
+  }
+
   // 设置 Marker 容器
   public addMarkerContainer(): void {
-    this.markerContainer = this.map.getPane('markerPane') as HTMLElement;
+    const container = this.map.getContainer();
+    const div = (this.markerContainer = document.createElement('div'));
+    container.appendChild(div);
+    // div.classList.add('l7-marker-container');
+    // div.classList.add('leaflet-layer');
+    // div.classList.add('leaflet-zoom-animated');
+    div.setAttribute('tabindex', '-1');
+    div.style.position = 'absolute';
+    div.style.left = '0px';
+    div.style.top = '0px';
+    div.style.zIndex = '600';
+    div.style.width = '0px';
+    div.style.height = '0px';
+    div.style.overflow = 'visible';
   }
 
   public getOverlayContainer(): HTMLElement | undefined {
@@ -102,7 +120,12 @@ export default class MapService extends BaseMapService<L.Map> {
 
     this.handleCameraChanged();
   }
-
+  public pixelToLngLat(pixel: [number, number]) {
+    return this.map.containerPointToLatLng(pixel);
+  }
+  public containerToLngLat(pixel: [number, number]) {
+    return this.pixelToLngLat(pixel);
+  }
   private onAnimZoom(ev: any) {
     // @ts-ignore
     if (this.map._zoomAnimated) {
@@ -152,20 +175,17 @@ export default class MapService extends BaseMapService<L.Map> {
     this.cameraChangedCallback = callback;
   }
   public getBounds(): Bounds {
-    const bounds = this.map.getBounds();
-    const NE = bounds.getNorthEast().wrap();
-    const SW = bounds.getSouthWest().wrap();
-    const center = this.getCenter();
-    const maxlng = center.lng > NE.lng || center.lng < SW.lng ? 180 - NE.lng : NE.lng;
-    const minlng = center.lng < SW.lng ? SW.lng - 180 : SW.lng;
-    console.log([
-      [minlng, SW.lat],
-      [maxlng, NE.lat],
-    ]);
-    // 兼容 Mapbox，统一返回西南、东北
+    const latlngBound = this.map.getBounds();
+
+    const sw = latlngBound.getSouthWest(),
+      ne = latlngBound.getNorthEast();
     return [
-      [minlng, SW.lat],
-      [maxlng, NE.lat],
+      [sw.lng, sw.lat],
+      [ne.lng, ne.lat],
     ];
+  }
+  public lngLatToContainer(lnglat: [number, number]): { x: number; y: number } {
+    const [lng, lat] = lnglat;
+    return this.map.latLngToContainerPoint([lat, lng]);
   }
 }
