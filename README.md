@@ -1,1 +1,1 @@
-该项目已迁移至 [L7 Extension](https://github.com/antvis/L7Extension/blob/4df7c2be09b4dc2f00631a6d1228b85f1eeffd4e/packages/leaflet) 中维护
+该项目已迁移至 [L7 Extension](https://github.com/antvis/L7Extension/tree/master/packages/leaflet) 中维护
